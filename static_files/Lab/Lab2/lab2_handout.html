@@ -1,0 +1,717 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>人工智能的硬件基石：从物理器件到计算架构 Lab2</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-default_background {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.highlight-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.block-color-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: undefined; }
+.select-value-color-pink { background-color: rgba(225, 136, 179, 0.27); }
+.select-value-color-purple { background-color: rgba(168, 129, 197, 0.27); }
+.select-value-color-green { background-color: rgba(123, 183, 129, 0.27); }
+.select-value-color-gray { background-color: rgba(84, 72, 49, 0.15); }
+.select-value-color-transparentGray { background-color: undefined; }
+.select-value-color-translucentGray { background-color: undefined; }
+.select-value-color-orange { background-color: rgba(224, 124, 57, 0.27); }
+.select-value-color-brown { background-color: rgba(210, 162, 141, 0.35); }
+.select-value-color-red { background-color: rgba(244, 171, 159, 0.4); }
+.select-value-color-yellow { background-color: rgba(236, 191, 66, 0.39); }
+.select-value-color-blue { background-color: rgba(93, 165, 206, 0.27); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="1d3572c4-bcab-80b5-94ae-eb78c8436d31" class="page sans"><header><h1 class="page-title">人工智能的硬件基石：从物理器件到计算架构 Lab2</h1><p class="page-description"></p></header><div class="page-body"><h1 id="1d3572c4-bcab-8109-80fb-dda8fb79df57" class="">五级流水线处理器 (100pts)</h1><p id="1d3572c4-bcab-80d1-823d-dacfdb46192c" class="">在此 Lab 中，你将完成一个<strong>简化的 </strong>5-Stage<strong> MIPS CPU</strong>，通过补全 Verilog 代码，使得每条指令能被正确执行。</p><h2 id="1d3572c4-bcab-807c-bcc2-d8b7bbbe9759" class=""><strong>1. 背景简介</strong></h2><p id="1d3572c4-bcab-8030-91b9-ccdf49cdf864" class="">本实验采用 MIPS 的 5 阶段流水线结构：</p><ol type="1" id="1d3572c4-bcab-8045-8565-cae5a442bb88" class="numbered-list" start="1"><li><strong>IF</strong> - Instruction Fetch</li></ol><ol type="1" id="1d3572c4-bcab-8025-bb3d-eb817e6af964" class="numbered-list" start="2"><li><strong>ID</strong> - Instruction Decode</li></ol><ol type="1" id="1d3572c4-bcab-80a2-916a-d306ddeb7120" class="numbered-list" start="3"><li><strong>EX</strong> - Execute</li></ol><ol type="1" id="1d3572c4-bcab-800c-90e5-c70e226f999e" class="numbered-list" start="4"><li><strong>MEM</strong> - Memory Access</li></ol><ol type="1" id="1d3572c4-bcab-80fe-92f5-ceafb77482ea" class="numbered-list" start="5"><li><strong>WB</strong> - Write Back</li></ol><p id="1d3572c4-bcab-808c-9957-f9ab75f9130b" class="">为了降低实现难度，本 CPU 不实现真正的流水线并发执行。<strong>每次仅执行一条指令，完成所有阶段后再启动下一条</strong>，无需处理数据冒险、控制冒险和 Forwarding。（也就是说只有一条指令 WB 完成之后，IF 才会 Fetch 下一条指令）</p><hr id="1d3572c4-bcab-80f5-8f4c-f8deb69384a3"/><h2 id="1d3572c4-bcab-80df-a110-d615e59d9ab0" class=""><strong>2. 项目结构说明</strong></h2><p id="1d8572c4-bcab-80ce-9f23-ea65fec0f116" class="">由于服务器可能发生了重启，获取文件前你可能需要执行以下命令以挂载 NFS：</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1d8572c4-bcab-8004-9021-f17615332a5d" class="code"><code class="language-Verilog">sudo mount 192.168.102.10:/mnt/nfs/ /mnt/course_files</code></pre><p id="1d6572c4-bcab-80b5-954b-d2d9f3cbc366" class="">在课程共享文件的 <code>/mnt/course_files</code> 文档下，你能看到 <code>Lab2</code> 文件夹，其中包含了此任务需要的代码。你需要将此文件夹复制到自己的主目录以进行编辑；</p><p id="1d3572c4-bcab-8083-85e0-e5618a164c10" class="">你将在如下文件结构下完成实验：</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1d3572c4-bcab-805c-80ff-c64e3ea69cdf" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">├── Makefile
+├── run_tests.sh              # 自动运行测试用例脚本
+├── setup_env.sh              # 配置环境脚本
+├── testbench/                # 测试平台及可视化
+│   ├── testbench.v           # 主测试平台
+│   └── ...
+├── test_progs/               # 测试指令程序（汇编 .s 文件）
+│   └── *.s                   # 示例程序文件
+├── verilog/                  # 你将完成的核心 Verilog 文件
+│   ├── pipeline.v            # 顶层模块
+│   ├── if_stage.v            # IF 阶段实现
+│   ├── id_stage.v            # ID 阶段实现
+│   ├── ex_stage.v            # EX 阶段实现
+│   ├── mem_stage.v           # MEM 阶段实现
+│   ├── wb_stage.v            # WB 阶段实现
+│   ├── regfile.v             # 通用寄存器文件
+│   ├── icache.v              # 指令缓存（可作为黑盒使用）
+│   └── cachemem.v            # 数据缓存（可作为黑盒使用）
+└── vs-asm                    # 汇编工具，用于生成测试程序二进制</code></pre><hr id="1d3572c4-bcab-8056-8a3e-ea20d26a46a8"/><h2 id="1d3572c4-bcab-8044-aee1-ef2ca206ba48" class=""><strong>3. 你的任务</strong></h2><p id="1d3572c4-bcab-8006-852e-c5dbe64c1396" class="">所有需要填空的地方都会用以下代码块标注：</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1d3572c4-bcab-805c-8599-dae79a86b0a4" class="code"><code class="language-Verilog">// 在此处插入你的代码
+// 这里有任务详情的注释
+// Insert your code below
+
+... Your code here ...
+
+// Insert your code above</code></pre><p id="1d3572c4-bcab-8011-bd3e-daa35deb41a7" class="">你需要在 verilog/ 目录下的以下文件完成 Lab（详情可以参考文件中的注释）：<div class="indented"><ol type="1" id="1d3572c4-bcab-8058-a59b-eed6ac1dab78" class="numbered-list" start="1"><li>if_stage.v<p id="1d7572c4-bcab-8037-bab3-c5104c0cba3b" class="">~5行代码</p></li></ol><ol type="1" id="1d6572c4-bcab-8071-b03a-dc9f369caa66" class="numbered-list" start="2"><li>id_stage.v<p id="1d7572c4-bcab-80be-a3b9-c210316441a4" class="">~15行代码</p></li></ol><ol type="1" id="1d6572c4-bcab-80fb-be96-e42ebfad0cb1" class="numbered-list" start="3"><li>ex_stage.v<p id="1d7572c4-bcab-80ed-a490-d61f02326e35" class="">~15行代码</p></li></ol><ol type="1" id="1d6572c4-bcab-8075-a176-d0353eedc8ee" class="numbered-list" start="4"><li>mem_stage.v<p id="1d7572c4-bcab-80d8-a5d8-f61eb76cad17" class="">&lt;5行代码</p></li></ol><ol type="1" id="1d6572c4-bcab-80be-892d-ed25e1c0d228" class="numbered-list" start="5"><li>wb_stage.v<p id="1d7572c4-bcab-8019-a9c1-e50119a9d89b" class="">~5行代码</p></li></ol><ol type="1" id="1d6572c4-bcab-8015-9114-f03402fbd776" class="numbered-list" start="6"><li>pipeline.v<p id="1d7572c4-bcab-80b1-89f6-d9252764d9f0" class="">~10行代码</p></li></ol></div></p><hr id="1d3572c4-bcab-80d1-a10a-f60cbebadd60"/><h2 id="1d3572c4-bcab-8075-a766-d9cc0c8d1222" class=""><strong>4. 运行与测试</strong></h2><h3 id="1d6572c4-bcab-8032-9490-cecf34dda3e8" class="">环境配置</h3><p id="1d6572c4-bcab-8037-b2bf-ee7518bfc5e9" class="">运行前你需要执行 Lab 文件夹中的 <code>setup_env.sh</code> 以配置环境，此操作需要使用 sudo：</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1d6572c4-bcab-805f-b47e-c37591a4507b" class="code"><code class="language-Verilog">sudo ./setup_env.sh</code></pre><h3 id="1d3572c4-bcab-8053-ac53-d6395ca10c02" class="">编译 Verilog 代码</h3><p id="1d3572c4-bcab-8097-8721-e6084296f40f" class="">你可以使用 <code>make all</code> 来编译CPU；可以使用 <code>make nuke</code> 清除编译产生的文件；</p><p id="1d3572c4-bcab-805b-9690-e19e83dc1061" class="">此后，你可以使用 <code>run_tests.sh -t &lt;path to test program&gt;</code> 来运行特定的测试任务，也可以不带参数运行此脚本以进行完整的测试。</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1d3572c4-bcab-8037-b1ef-e87c4cbfe0fa" class="code"><code class="language-Shell">$ ./run_tests.sh -h
+USAGE: ./run_tests.sh [OPTIONS]
+
+This script runs one or all the tests against both this processor&#x27;s output and golden processor&#x27;s output
+
+OPTIONS:
+  -h, --help             Show this message
+  -t, --test FILE        Specific test program to run (can be specified multiple times for more tests)
+  -q, --quiet            Run in non-interactive mode</code></pre><h3 id="1d3572c4-bcab-8087-9864-dd87240b891e" class="">关于 Debug</h3><p id="1d3572c4-bcab-80c6-88f9-ebabe12547b4" class="">在你完成 CPU 实现后，运行测试程序将自动生成多个调试输出文件。每个文件提供不同层次的信息，帮助你理解 CPU 在每个周期做了什么，哪里可能出错了。</p><p id="1d3572c4-bcab-805f-8110-e1a77f3bb147" class="">Tips：假如你运行测试程序很久还没有输出，那很有可能是CPU死循环了，需要排查是否错误地发生了stall；</p><h3 id="1d3572c4-bcab-801a-8c0a-ea1095a1ba64" class=""><strong>输出文件说明</strong></h3><table id="1d3572c4-bcab-8048-8ab7-f462d51e894c" class="simple-table"><tbody><tr id="1d3572c4-bcab-8020-a249-e44ac700d3ed"><td id=":b]P" class="" style="width:275px"><strong>文件名格式</strong></td><td id="aEQJ" class="" style="width:557px"><strong>内容简介</strong></td></tr><tr id="1d3572c4-bcab-80c9-bdec-c60b52786178"><td id=":b]P" class="" style="width:275px"><strong>&lt;test_program.s&gt;_detailed.csv</strong></td><td id="aEQJ" class="" style="width:557px"><strong>每个周期各阶段的详细信号变化</strong>（包括寄存器值、ALU输出、控制信号、PC等），适合深入单步追踪执行流程。</td></tr><tr id="1d3572c4-bcab-8069-9a0e-ce7f2d9b5265"><td id=":b]P" class="" style="width:275px"><strong>&lt;test_program.s&gt;_memory.out</strong></td><td id="aEQJ" class="" style="width:557px">程序运行结束后，<strong>内存中数据的最终状态</strong>。</td></tr><tr id="1d3572c4-bcab-8000-966a-ed91a450328d"><td id=":b]P" class="" style="width:275px"><strong>&lt;test_program.s&gt;_pipeline.out</strong></td><td id="aEQJ" class="" style="width:557px"><strong>流水线五个阶段在每个周期的执行情况</strong>（即哪条指令在哪个阶段），尽管本 Lab 中是顺序执行，也可用于观察执行是否正确。</td></tr><tr id="1d3572c4-bcab-80a9-9de6-e571c505ca21"><td id=":b]P" class="" style="width:275px"><strong>&lt;test_program.s&gt;_program.out</strong></td><td id="aEQJ" class="" style="width:557px">仿真器的输出：辅助验证整体行为。</td></tr><tr id="1d3572c4-bcab-804d-9480-e9e06752b197"><td id=":b]P" class="" style="width:275px"><strong>&lt;test_program.s&gt;_writeback.out</strong></td><td id="aEQJ" class="" style="width:557px">每次进入 WB 阶段时，<strong>写回的寄存器编号、值和对应的 PC。</strong></td></tr></tbody></table><p id="1d5572c4-bcab-8032-b5a6-f7f4be1923ef" class="">你可以在 ./golden_result 里面找到期望的输出，并用于参考；</p><hr id="1d3572c4-bcab-80ad-ba99-c98bbbd0976c"/><h2 id="1d3572c4-bcab-8008-9150-c030bb16f644" class=""><strong>5. 截止日期与提交要求</strong></h2><blockquote id="1d6572c4-bcab-8098-b3c7-c13a22f559c5" class=""><mark class="highlight-default_background"><strong>截止日期：2025.6.15 23:59</strong></mark></blockquote><ol type="1" id="1d3572c4-bcab-80dd-8b11-fabda83de377" class="numbered-list" start="1"><li>压缩为zip格式的实现的 Verilog 文件（提交整个 verilog/ 目录）<p id="1d4572c4-bcab-804c-b34d-fe97d578bb25" class="">你可以通过 <code>make submit</code> 来快速生成一个zip文件；</p></li></ol><ol type="1" id="1d3572c4-bcab-8071-969f-f18687f4b050" class="numbered-list" start="2"><li>简略的实验报告，包含：<ul id="1d3572c4-bcab-80fc-b593-e6a4272c1bce" class="bulleted-list"><li style="list-style-type:disc">实现思路</li></ul><ul id="1d3572c4-bcab-80d9-add6-d68f89b9408f" class="bulleted-list"><li style="list-style-type:disc">你调试时遇到的关键问题及解决方案</li></ul><ul id="1d5572c4-bcab-80d2-b805-cdde976b716d" class="bulleted-list"><li style="list-style-type:disc"><strong>注意：报告不超过 2 页</strong></li></ul></li></ol><p id="1d3572c4-bcab-8034-840b-cdf65213d31d" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

@@ -1,0 +1,52 @@
+# Site settings
+course_name: "Hardware Fundamentals for Artificial Intelligence: From Physical Devices to Chip Architecture"
+course_description: "本课程主要介绍面向人工智能的硬件基础，内容涵盖从底层物理器件到顶层芯片架构"
+course_semester: "Spring 2025"
+
+baseurl: "/2025Spring/" # the subpath of your site, e.g. /blog/
+url: "http://AIArchPKU.github.io/" # the base hostname & protocol for your site
+
+schoolname: "Peking University"
+schoolurl: "https://pku.edu.cn"
+
+address: |
+    School of Yuanpei
+    Peking Univ.
+    Beijing
+
+# Set your Google Analytics tracking ID (set up yours at http://www.google.com/analytics/)
+# google_analytics: UA-XXXXXXXX-X
+
+### Do not change the followings unless you know what you are doing ###
+
+# Build settings
+markdown: kramdown
+
+# Other options
+permalink: blog/:year/:month/:title
+excerpt_separator: "<!--more-->"
+
+include: ['_images', '_css']
+exclude: ['develop']
+
+dateformat: "%m/%d/%Y"
+
+future: true
+collections:
+    events:
+        output: true
+    lectures:
+        output: true
+    assignments:
+        output: true
+    announcements:
+        output: false
+    finals:
+        output: true
+
+defaults:
+  - scope:
+      path: ""
+      type: "assignments"
+    values:
+      layout: "assignment"

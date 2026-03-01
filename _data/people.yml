@@ -1,0 +1,12 @@
+instructors:
+  - name: Yaoyu Tao
+    profile_pic: /_images/pp/taoyaoyu.jpg
+    webpage: https://taoyaoyu.github.io/
+
+teaching_assistants:
+  - name: Bowen Wang
+    profile_pic: /_images/pp/wangbowen.jpg
+    webpage: 2401111896@stu.pku.edu.cn
+  - name: Zhe Zhan
+    profile_pic: /_images/pp/zhanzhe.jpg
+    webpage: 2401111896@stu.pku.edu.cn    
