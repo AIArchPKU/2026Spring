@@ -1,3 +1,4 @@
+<!--
 ---
 layout: page
 title: Project
@@ -50,3 +51,4 @@ permalink: /project/
 实验具体要求见[Lab 2 bonus Handout](static_files/Lab/Lab2/Lab2_bonus.pdf)
 
 **Due: 2025-06-15 23:59:59**
+-->
