@@ -1,9 +1,9 @@
 # Site settings
 course_name: "Hardware Fundamentals for Artificial Intelligence: From Physical Devices to Chip Architecture"
 course_description: "本课程主要介绍面向人工智能的硬件基础，内容涵盖从底层物理器件到顶层芯片架构"
-course_semester: "Spring 2025"
+course_semester: "Spring 2026"
 
-baseurl: "/2025Spring/" # the subpath of your site, e.g. /blog/
+baseurl: "/2026Spring/" # the subpath of your site, e.g. /blog/
 url: "http://AIArchPKU.github.io/" # the base hostname & protocol for your site
 
 schoolname: "Peking University"
