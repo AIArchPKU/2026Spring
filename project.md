@@ -1,8 +1,10 @@
 ---
-layout: project
+layout: page
 title: Project
 permalink: /project/
 ---
+
+
 # Preparing
 
 本课程Lab将依托于[CLab](https://clab.pku.edu.cn)进行。你需要在CLab上创建用于本课程的主机，具体步骤见[CLab使用指南](/static_files/Lab/Preparing/clab_usage.html)。
