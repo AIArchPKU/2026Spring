@@ -15,8 +15,8 @@ permalink: /project/
 
 
 # Lab 1
-本实验的目的是设计并实现一个1D Winograd卷积计算单元。你需要理解Winograd算法的基本原理，并将其应用于硬件设计中。实验要求你在Verilog中实现该计算单元，并通过流水线技术提升其性能。
+本实验目的是设计并实现一个1D Winograd卷积计算单元。你需要理解Winograd算法的基本原理，并将其应用于硬件设计中。实验要求你在Verilog中实现该计算单元，并通过流水线技术提升其性能。
 
-**实验详情**： [Lab1 1D Winograd](/2026Spring/labs/lab1/handout.html)
+**实验详情**： [Lab1 1D Winograd](/2026Spring/labs/Lab1/handout.html)
 
 **实验报告及代码提交截止日期**：2026年5月10日23:59
