@@ -12,3 +12,11 @@ permalink: /project/
 > ❗️**本课程主机会在课程结束后随时被回收，请及时备份你的数据。**
 
 要进行本课程的实验，你可能需要一些基本的Linux操作系统知识。如果你对Linux操作系统不熟悉，可以参阅 MIT 的 [missing semeter](https://missing.csail.mit.edu/2020/) （中文翻译版：[计算机教育中缺失的一课](https://missing-semester-cn.github.io/)）。
+
+
+# Lab 1
+本实验的目的是设计并实现一个1D Winograd卷积计算单元。你需要理解Winograd算法的基本原理，并将其应用于硬件设计中。实验要求你在Verilog中实现该计算单元，并通过流水线技术提升其性能。
+
+**实验详情**： [Lab1 1D Winograd](/2026Spring/labs/lab1/handout.html)
+
+**实验报告及代码提交截止日期**：2026年5月10日23:59
