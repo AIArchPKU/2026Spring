@@ -7,8 +7,8 @@ title: Lab1 1D Winograd
 
 (点击跳转到对应位置)
 
-- 2025-10-22: [优化任务3说明，增加流水线后运行 Testbench 的提示](#update-1022)
-- 2025-11-01: 增加实验环境问题的[Troubleshooting](#troubleshooting)部分
+- 2026-04-13: [优化任务3说明，增加流水线后运行 Testbench 的提示](#update-1022)
+- 2026-04-13: 增加实验环境问题的[Troubleshooting](#troubleshooting)部分
 
 
 ## Troubleshooting

@@ -19,4 +19,4 @@ permalink: /project/
 
 **实验详情**： [Lab1 1D Winograd](/2026Spring/labs/Lab1/handout.html)
 
-**实验报告及代码提交截止日期**：2026年5月10日23:59
+**实验报告及代码提交截止日期**：2026年5月13日23:59
