@@ -1,6 +1,6 @@
 ---
 type: assignment
-date: 2026-05-137T23:59:59
+date: 2026-05-13T23:59:59
 title: 'Assignment 2'
 pdf: /static_files/Assignments/Assignment2/Assignment2.pdf
 # solutions: /static_files/Assignments/Assignment1/Solution1.pdf
