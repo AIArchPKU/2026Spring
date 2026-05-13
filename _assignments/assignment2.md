@@ -2,7 +2,7 @@
 type: assignment
 date: 2026-05-13T23:59:59
 title: 'Assignment 2'
-pdf: /static_files/Assignments/Assignment2/Assignment2.pdf
+pdf: /static_files/Assignments/Assignment2/Assignment2_new.pdf
 # solutions: /static_files/Assignments/Assignment1/Solution1.pdf
 
 hide_from_announcments: false
