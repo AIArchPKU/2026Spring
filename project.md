@@ -31,4 +31,4 @@ permalink: /project/
  - [MIPS Instruction Formats](/2026Spring/static_files/Lab/Lab2/Instruction_Formats.pdf)
  - [MIPS Instruction Descriptions](/2026Spring/static_files/Lab/Lab2/Instruction_Descriptions_Short.pdf) ([Detailed version](/2026Spring/static_files/Lab/Lab2/Instruction_Descriptions_Long.pdf))
 
-**实验报告及代码提交截止日期**：2026年06月13日23:59
+**实验报告及代码提交截止日期**：2026年06月18日23:59
