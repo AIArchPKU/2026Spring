@@ -1,0 +1,12 @@
+---
+type: lecture
+date: 2026-6-1T13:00:00+8:00
+title: 软硬件协同设计
+tldr: "介绍人工智能加速器的基本架构与设计原理"
+hide_from_announcments: true
+thumbnail: /static_files/presentations/Lecture12/Lecture12.jpg
+links:
+    - url: /static_files/presentations/Lecture12/Lecture12.pdf
+      name: slides
+
+---
